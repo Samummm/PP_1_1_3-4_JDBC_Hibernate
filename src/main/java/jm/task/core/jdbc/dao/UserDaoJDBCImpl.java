@@ -82,7 +82,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        String updSQL = "TRUNCATE TABLE user";
+        String updSQL = "DELETE FROM user";
         try {
             conn.prepareStatement(updSQL).executeUpdate();
         } catch (SQLException ex) {
