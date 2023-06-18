@@ -17,7 +17,7 @@ public class Util {
     private final static String password = "root";
     private final static String dbDriver = "com.mysql.cj.jdbc.Driver";
     private final static String dialect = "org.hibernate.dialect.MySQLDialect";
-    private final static String dbURL = "jdbc:mysql://" + hostName + ":3306/" + dbName + ";create=true";
+    private final static String dbURL = "jdbc:mysql://" + hostName + ":3306/" + dbName;
     private static Connection conn;
     private static SessionFactory factory;
 
