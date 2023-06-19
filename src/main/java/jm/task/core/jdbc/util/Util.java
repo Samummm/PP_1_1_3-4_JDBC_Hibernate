@@ -11,6 +11,8 @@ import java.util.Properties;
 
 public final class Util {
     // реализуйте настройку соеденения с БД
+    private  Util() {
+    }
     private final static String HOST_NAME = "localhost";
     private final static String DB_NAME = "kata_db";
     private final static String USER_NAME = "root";
