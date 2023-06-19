@@ -26,7 +26,7 @@ public class UserDaoHibernateImpl implements UserDao {
                 "age TINYINT)";
         try (Session session = factory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.createSQLQuery(updSQL).executeUpdate();
+            session.createSQLQuery(updSQL).addEntity(User.class).executeUpdate();
             transaction.commit();
         }
 
@@ -37,7 +37,7 @@ public class UserDaoHibernateImpl implements UserDao {
         String updSQL = "DROP TABLE IF EXISTS user";
         try (Session session = factory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.createSQLQuery(updSQL).executeUpdate();
+            session.createSQLQuery(updSQL).addEntity(User.class).executeUpdate();
             transaction.commit();
         }
     }
@@ -54,7 +54,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-        String updSQL = "DELETE FROM User WHERE id = " + id;
+        String updSQL = "DELETE FROM user WHERE id = " + id;
         try (Session session = factory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.createSQLQuery(updSQL).executeUpdate();
@@ -65,9 +65,11 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
-        String updSQL = "SELECT FROM user";
+        String updSQL = "FROM User";
         try (Session session = factory.openSession()) {
-            users = (List<User>) session.createSQLQuery(updSQL).list();
+            Transaction transaction = session.beginTransaction();
+            users = session.createQuery(updSQL).getResultList();
+            transaction.commit();
             users.stream().forEach(System.out::println);
         }
         return users;
