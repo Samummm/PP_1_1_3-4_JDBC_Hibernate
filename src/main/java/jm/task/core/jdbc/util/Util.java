@@ -11,30 +11,19 @@ import java.util.Properties;
 
 public class Util {
     // реализуйте настройку соеденения с БД
-    private final static String hostName = "localhost";
-    private final static String dbName = "kata_db";
-    private final static String userName = "root";
-    private final static String password = "root";
-    private final static String dbDriver = "com.mysql.cj.jdbc.Driver";
-    private final static String dialect = "org.hibernate.dialect.MySQLDialect";
-    private final static String dbURL = "jdbc:mysql://" + hostName + ":3306/" + dbName;
-    private static Connection conn;
-    private static SessionFactory factory;
+    private final static String HOST_NAME = "localhost";
+    private final static String DB_NAME = "kata_db";
+    private final static String USER_NAME = "root";
+    private final static String PASSWORD = "root";
+    private final static String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
+    private final static String SQL_DIALECT = "org.hibernate.dialect.MySQLDialect";
+    private final static String DB_URL = "jdbc:mysql://" + HOST_NAME + ":3306/" + DB_NAME;
 
-    public static Connection getConn() {
-        getConnection();
-        return conn;
-    }
-    public static SessionFactory getFactory() {
-        getHibernateConnection();
-        return factory;
-    }
-
-    private static void getConnection() {
+    public static Connection getConnection() {
+        Connection connection = null;
         try {
-            Class.forName(dbDriver);
-            Connection connection = DriverManager.getConnection(dbURL, userName, password);
-            conn = connection;
+            Class.forName(DB_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("JDBC драйвер для СУБД не найден!");
@@ -42,17 +31,17 @@ public class Util {
             e.printStackTrace();
             System.out.println("Ошибка SQL!");
         }
+        return connection;
     }
 
-    private static void getHibernateConnection() {
+    public static final SessionFactory getHibernateConnection() {
         Properties properties = new Properties();
-        properties.put(Environment.DRIVER, dbDriver);
-        properties.put(Environment.URL, dbURL);
-        properties.put(Environment.DIALECT, dialect);
-        properties.put(Environment.USER, userName);
-        properties.put(Environment.PASS, password);
-
-        factory = new Configuration()
+        properties.put(Environment.DRIVER, DB_DRIVER);
+        properties.put(Environment.URL, DB_URL);
+        properties.put(Environment.DIALECT, SQL_DIALECT);
+        properties.put(Environment.USER, USER_NAME);
+        properties.put(Environment.PASS, PASSWORD);
+        return new Configuration()
                 .setProperties(properties)
                 .addAnnotatedClass(jm.task.core.jdbc.model.User.class)
                 .buildSessionFactory();

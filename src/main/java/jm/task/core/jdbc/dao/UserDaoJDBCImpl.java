@@ -10,7 +10,7 @@ import java.util.List;
 public class UserDaoJDBCImpl implements UserDao {
     private Connection conn;
     public UserDaoJDBCImpl() {
-        conn = Util.getConn();
+        conn = Util.getConnection();
     }
 
     public void createUsersTable() {
