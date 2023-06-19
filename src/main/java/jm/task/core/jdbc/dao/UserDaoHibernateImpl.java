@@ -13,7 +13,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     private SessionFactory factory;
     public UserDaoHibernateImpl() {
-        factory = Util.getHibernateConnection();
+        factory = Util.getUtil().getHibernateConnection();
     }
 
 
