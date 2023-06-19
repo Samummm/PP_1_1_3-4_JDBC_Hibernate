@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class Util {
+public final class Util {
     // реализуйте настройку соеденения с БД
     private final static String HOST_NAME = "localhost";
     private final static String DB_NAME = "kata_db";
@@ -34,18 +34,18 @@ public class Util {
         return connection;
     }
 
-    public static final SessionFactory getHibernateConnection() {
+    public static SessionFactory getHibernateConnection() {
         Properties properties = new Properties();
         properties.put(Environment.DRIVER, DB_DRIVER);
         properties.put(Environment.URL, DB_URL);
         properties.put(Environment.DIALECT, SQL_DIALECT);
         properties.put(Environment.USER, USER_NAME);
         properties.put(Environment.PASS, PASSWORD);
-        return new Configuration()
+        final SessionFactory sessionFactory = new Configuration()
                 .setProperties(properties)
                 .addAnnotatedClass(jm.task.core.jdbc.model.User.class)
                 .buildSessionFactory();
-
+        return sessionFactory;
     }
 
 }
