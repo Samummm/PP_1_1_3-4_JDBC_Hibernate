@@ -28,6 +28,8 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction transaction = session.beginTransaction();
             session.createSQLQuery(updSQL).addEntity(User.class).executeUpdate();
             transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
@@ -39,6 +41,8 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction transaction = session.beginTransaction();
             session.createSQLQuery(updSQL).addEntity(User.class).executeUpdate();
             transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -59,6 +63,8 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction transaction = session.beginTransaction();
             session.createSQLQuery(updSQL).executeUpdate();
             transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -71,6 +77,8 @@ public class UserDaoHibernateImpl implements UserDao {
             users = session.createQuery(updSQL).getResultList();
             transaction.commit();
             users.stream().forEach(System.out::println);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return users;
     }
@@ -82,6 +90,8 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction transaction = session.beginTransaction();
             session.createSQLQuery(updSQL).executeUpdate();
             transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
