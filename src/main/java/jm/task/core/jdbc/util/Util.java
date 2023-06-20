@@ -11,12 +11,15 @@ import java.util.Properties;
 
 public final class Util {
     // реализуйте настройку соеденения с БД
-    private static final Util UTIL = new Util();
+    private static  SessionFactory sessionFactory;
     private  Util() {
     }
 
-    public static Util getUtil() {
-        return UTIL;
+    public static SessionFactory getSession() {
+        if (sessionFactory == null) {
+            sessionFactory = Util.getHibernateConnection();
+        }
+        return sessionFactory;
     }
     private final static String HOST_NAME = "localhost";
     private final static String DB_NAME = "kata_db";
@@ -26,7 +29,7 @@ public final class Util {
     private final static String SQL_DIALECT = "org.hibernate.dialect.MySQLDialect";
     private final static String DB_URL = "jdbc:mysql://" + HOST_NAME + ":3306/" + DB_NAME;
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         Connection connection = null;
         try {
             Class.forName(DB_DRIVER);
@@ -41,7 +44,7 @@ public final class Util {
         return connection;
     }
 
-    public SessionFactory getHibernateConnection() {
+    private static SessionFactory getHibernateConnection() {
         Properties properties = new Properties();
         properties.put(Environment.DRIVER, DB_DRIVER);
         properties.put(Environment.URL, DB_URL);
